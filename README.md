@@ -57,4 +57,20 @@ EL hecho de que haya valores extremos y esten fuera de de rango fisico, lo revis
 
 #### indica qué alternativa usarías para las alertas y cuál para los informes históricos.
 
+- Para las  alertas usaría streaming, ya que es de mayor velociad y una alerta necesitas que sea de manera inmediata.
 
+- Para los informes historicos usaría batch dado que tienen una menor compleidad y no es algo que necesites generar al momento.
+
+### Actividad 4 Elaborar una recomendación
+Dentro de las zonas que ya mencioné anteriormente como las zonas que necesitan mayor atención, podemos priorizar la zona D4 dado que es un distrito con una alta actividad y  una población en una zona no tan grande.
+
+#### Recomendaciones:
+Bajar la actividad automovilista de coches de altas emisiones en la zona D4 durante las horas de mayor actividad. Promocionar el uso de bicicletas y transporte público en lugar de coche personal.
+
+Razones para dichas recomendaciones:
+- alta poblacion y trafico
+- Zona de actividad indutrial
+
+El problema seguira existiendo dado a que seguira siendo una zona de alta contaminación, pero se con las recomendiones se podría a reducir dicha contaminación.
+
+como medida de privacidad, se podría excluir el añadir las cordenadas de en el historico para que no se sepan con exactitud las rutas de los habitantes de la zona.
