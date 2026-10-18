@@ -1,4 +1,4 @@
-s# 5 Copia de Seguridad,Seguridad y Límites
+## 5 Copia de Seguridad,Seguridad y Límites
 
 ### 5.1.Procedimiento de Copia y Restauración
 
