@@ -65,7 +65,7 @@ const prodRobot = db.products.insertOne({
 db.reviews.insertMany([
   {
     product_id: prodTV.insertedId,
-    user_name: "Marcos L.",
+    user_id: user1.insertedId,
     rating: NumberInt(5),
     title: "Espectacular imagen",
     comment: "Se ve increíble y el sonido integrado es más que suficiente.",
@@ -74,7 +74,7 @@ db.reviews.insertMany([
   },
   {
     product_id: prodTV.insertedId,
-    user_name: "Elena G.",
+    user_id: user2.insertedId,
     rating: NumberInt(4),
     title: "Muy buena compra",
     comment: "Cumple con creces, el mando a distancia es cómodo.",
@@ -83,7 +83,7 @@ db.reviews.insertMany([
   },
   {
     product_id: prodRobot.insertedId,
-    user_name: "Roberto P.",
+    user_id: user3.insertedId,
     rating: NumberInt(2),
     title: "Se atasca con frecuencia",
     comment: "La potencia es buena pero se enreda con facilidad en cables.",
@@ -121,57 +121,4 @@ db.products.updateOne(
     }
   }
 );
-//Agregacion compleja
-db.products.aggregate([
-  // Etapa 1
-  {
-    $match: {
-      category_name: "Electrónica",
-      status: "active"
-    }
-  },
 
-  // Etapa 2
-  {
-    $unwind: "$variants"
-  },
-
-  // Etapa 3
-  {
-    $lookup: {
-      from: "reviews",
-      let: { prodId: "$_id" },
-      pipeline: [
-        { $match: { $expr: { $and: [{ $eq: ["$product_id", "$$prodId"] }, { $eq: ["$status", "approved"] }] } } }
-      ],
-      as: "product_reviews"
-    }
-  },
-
-  // Etapa 4
-  {
-    $group: {
-      _id: "$brand",
-      total_units_in_stock: { $sum: "$variants.stock" },
-      avg_catalog_price: { $avg: "$price" },
-      distinct_products: { $addToSet: "$name" }
-    }
-  },
-  // Etapa 5
-  {
-    $facet: {
-      inventory_ranking: [
-        { $sort: { total_units_in_stock: -1 } }
-      ],
-      brand_summary: [
-        {
-          $group: {
-            _id: null,
-            total_brands: { $sum: 1 },
-            global_units: { $sum: "$total_units_in_stock" }
-          }
-        }
-      ]
-    }
-  }
-]);

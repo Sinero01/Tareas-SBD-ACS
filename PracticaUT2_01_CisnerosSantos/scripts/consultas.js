@@ -92,3 +92,57 @@ db.products.aggregate([
     }
   }
 ]);
+//Agregacion compleja
+db.products.aggregate([
+  // Etapa 1
+  {
+    $match: {
+      category_name: "Electrónica",
+      status: "active"
+    }
+  },
+
+  // Etapa 2
+  {
+    $unwind: "$variants"
+  },
+
+  // Etapa 3
+  {
+    $lookup: {
+      from: "reviews",
+      let: { prodId: "$_id" },
+      pipeline: [
+        { $match: { $expr: { $and: [{ $eq: ["$product_id", "$$prodId"] }, { $eq: ["$status", "approved"] }] } } }
+      ],
+      as: "product_reviews"
+    }
+  },
+
+  // Etapa 4
+  {
+    $group: {
+      _id: "$brand",
+      total_units_in_stock: { $sum: "$variants.stock" },
+      avg_catalog_price: { $avg: "$price" },
+      distinct_products: { $addToSet: "$name" }
+    }
+  },
+  // Etapa 5
+  {
+    $facet: {
+      inventory_ranking: [
+        { $sort: { total_units_in_stock: -1 } }
+      ],
+      brand_summary: [
+        {
+          $group: {
+            _id: null,
+            total_brands: { $sum: 1 },
+            global_units: { $sum: "$total_units_in_stock" }
+          }
+        }
+      ]
+    }
+  }
+]);

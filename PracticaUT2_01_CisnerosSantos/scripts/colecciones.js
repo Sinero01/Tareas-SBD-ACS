@@ -44,8 +44,23 @@ db.createCollection("reviews", {
       required: ["product_id", "rating", "status"],
       properties: {
         product_id: { bsonType: "objectId" },
+        user_id: { bsonType: "objectId",},
         rating: { bsonType: "int", minimum: 1, maximum: 5 },
         status: { enum: ["approved", "pending", "rejected"] }
+      }
+    }
+  }
+});
+
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["email", "password", "role"],
+      properties: {
+        email: {bsonType: "string", pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",},
+        password: {bsonType: "string",},
+        role: {enum: ["admin", "customer", "moderator"],}
       }
     }
   }
