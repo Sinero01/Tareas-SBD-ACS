@@ -6,48 +6,54 @@
 
 - Escenario: Red de adopción de mascotas: Animales rescatados, protectoras, casas de acogida y adoptantes. Resuelve la asignación más compatible según espacio y convivencia
 
--Participantes:las protectoras que rescatan los animales y los usuarios que los acogen de las protectoras o los llevan a estas.
+- Participantes:
+
+  - Adoptante: Usuario que busca un animal para adoptar
+
+  - Protectora: Lugar Temporal donde se encuentra el animal mientras encuentra una adopción
+
+  - Veterinario: Profesional que certifica el estado de salud del animal y la compatibilidad de convivencia del animal con otros animales.
+
+  - Motor de Recomendación: Analiza los adoptantes y recomienda animales segun su preferencia, compatibilidad de convivencia y cercania a la protectora.
 
 ### 1.2 Preguntas
 
-- 1 ¿Cual es el centro de acogida más cercano?
+1. ¿Qué animales disponibles para adopción son compatibles con las especies de animales que ya conviven en el hogar del adoptante?
 
-- 2 ¿Que animales se pueden adoptar?
+2. ¿Qué protectoras tienen capacidad disponible?
 
-- 3 ¿Hay hueco para acoger más animaes?
+3. ¿Cual es el historial de traslados de un animal(Por que protectoras ha pasado)?
 
-- 4 ¿Cual es el centro de acogida con mayor cantidad de animales?
+4. ¿Cuáles son los animales compatibles con un adoptante que llevan más tiempo esperando adopción?
 
-- 5 ¿Que enfermedades o lesiones poseen los animales?
+5. ¿Qué enfermedades, lesiones o tratamientos tienen registrados los animales y qué veterinario los certificó??
 
-- 6 ¿Requisitos para adoptar un animal?
+6. ¿Cual es la protectora más cercana con capacidad disponible para derivar o traladar un animal?
 
 ### 1.3  Datos y recorridos que se sonsultaran con mayor frecuencia frente a los que se registran puntualmente
 
--Lecturas masivas: La informacion de los animales, junto con la informacion de sus protectoras y los recorridos de un usuario siga a x centros de acogida y este sugiera aniamles propios ara adoptar.
+- Lecturas masivas:
 
--Registros puntuales: Un usuario al registrarse en la aplicacion, y seguir a un centro de acogida, registro de un animal a un centro de acogida.
+  - Exploración de datos animales y protectoras.
+
+  - Sugerencias y seguimiento de centros.
+  
+  - Comprobaciones de compatibilidad.
+
+- Registros puntuales:
+
+  - Registro de nuevos usuarios.
+
+  - Acciones de seguimiento.
+
+  - Alta de animal rescatado y traslado.
 
 ### 1.4  Requisitos de seguridad, disponibilidad ,privacidad de los datos y prevision de crecimiento de la red
 
 1. Seguridad:Conexiones cifradas mediante TLS.
 
-2. Privacidad:Los usuarios pueden configurar su perfil.AL darse de baja se eliminan su preferencias y datos personales.
+2. Privacidad:Los usuarios pueden configurar su perfil. Al darse de baja se eliminan su preferencias y datos personales.
 
 3. Disponibilidad: Clúster de Neo4j en alta disponibilidad con replicación Raft, garantizando que el streaming no sufra interrupciones si cae una instancia de lectura.
 
-## 2 Diseñar el grafo de nodos y relaciones
-
-### 2.1 Etiquetas de los nodos
-
-1. Animal: Nombre, raza. color, sexo, edad, salud,
-2. Protectora: Nombre, localizacion, animales, huecos totales.
-3. Adoptante: Nombre, localizacion, preferencia, Especificaciones de vivienda o zona de adopcion.
-
-### 2.2 tipos de relaciones
-
-### 2.3 justificacion
-
-### 2.4 Estrategia para identidicadores único y tipo de datos compatibles con Cypher
-
-### 2.5 Limites y riesgos del modelo
+4. Crecimiento escalable: Escalabilidad proyectada para decenas de miles de animales y adoptantes anuales. Dado que el historial de traslados de un animal es lineal y corto (pocos saltos), las lecturas y caminos se mantienen en milisegundos sin degradación de memoria.
