@@ -66,10 +66,16 @@ Registra al menos 5 eventos clave demostrados fehacientemente con consultas a Dy
    WHERE fechaHora BETWEEN '2026-11-02T22:10:00' AND '2026-11-02T22:20:00'
    ```
    - ¿Por qué el motor ejecutó un Scan y qué impacto tendría este patrón en una tabla con 500 millones de registros?
-   - [Tu explicación técnica]
+   - Aunque se utiliza un where la query es de un scan ya  no existe una condicion de igualdad sobre la partition key teniendo que buscar en toda la tabla y no soloo en la agrupación de esa clave faltante. Esto provocaria una busqueda con una alta tiempo de ejecución
 
 2. **Operación sobre Global Secondary Index (GSI):**
    - ¿Qué consulta utilizó el índice `PorObjeto`?La consulta sobre el objeto robado.
-   - *Consulta PartiQL:* `SELECT ...`
+   - *Consulta PartiQL:*
+   ```
+
+   SELECT * FROM "EscapeRoomMinecraft"."PorObjeto"
+   WHERE objeto = 'ESPADA_OMEGA'
+
+   ```
    - ¿Qué ventaja técnica aportó la proyección `ALL` frente a consultar la tabla base?
-   - [Tu explicación técnica]
+   - Esto nos ayuda a reducir el tiempo de busqueda en nuestra query por indice ya que copia todos los atributos del elemento original de la tabla base dentro de la estructura del índice.
